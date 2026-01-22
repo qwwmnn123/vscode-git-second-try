@@ -1,0 +1,113 @@
+VS Code 推送本地代码到 GitHub：完整指令与步骤
+
+1) 全局配置（只需执行一次）
+
+```bash
+# 设置用户名与邮箱（替换为你的信息）
+git config --global user.name "你的姓名"//**qwwmnn123**
+git config --global user.email "you@example.com"//**164953341@qq.com**
+
+# 可选：设置默认分支名称为 main（新仓库推荐）
+git config --global init.defaultBranch main
+```
+
+2) 在本地项目目录初始化仓库
+
+```bash
+cd /path/to/your/project
+git init
+# 创建 .gitignore（如果需要）
+echo "node_modules/" >> .gitignore
+echo "*.pyc" >> .gitignore
+```
+
+3) 首次提交（添加、提交）
+
+```bash
+git add .  //**本地文件提交到暂存去的所有文件把暂存区的**
+git commit -m "Initial commit"//**"Initial commit"只是个名字，可以为"第一次提交等"**
+```
+
+4) 在 GitHub 创建远程仓库（在浏览器里），然后关联远程并推送
+
+- 在 GitHub 网站上创建仓库（不勾选初始化 README，否则会出现合并冲突）。
+- 假设远程仓库 URL 为：https://github.com/USERNAME/REPO.git 或 git@github.com:USERNAME/REPO.git
+
+```bash
+# 设置远程 origin（替换为你的仓库 URL）
+git remote add origin <REPO_URL>
+# 将本地 main 分支推到远程并建立上游分支
+git branch -M main
+git push -u origin main
+```
+
+5) 如果使用 HTTPS 并要求凭证//不太好用，一般不用
+
+- Windows 上 Git 通常使用 Git Credential Manager，会弹出浏览器要求你登录或输入 Personal Access Token（PAT）。
+- 推荐使用 PAT（在 GitHub Settings -> Developer settings -> Personal access tokens 创建），并选择合适权限（repo）。
+
+6) 使用 SSH（推荐较少交互）//**每个电脑都需要配置一个新的SSH**
+//可以问豆包，github如何设置SSH
+```bash
+# 生成 SSH 密钥（如果还没有）
+ssh-keygen -t ed25519 -C "you@example.com"
+# 启动 ssh-agent 并添加密钥
+eval "$(ssh-agent -s)"    # 在 PowerShell/WSL 中用相应命令
+ssh-add ~/.ssh/id_ed25519
+# 将 ~/.ssh/id_ed25519.pub 的内容复制到 GitHub 的 SSH keys
+```
+
+然后把远程地址换成 SSH：
+
+```bash
+git remote set-url origin git@github.com:USERNAME/REPO.git
+git push -u origin main
+```
+
+7) VS Code 中的 GUI 操作（快速步骤）
+
+- 打开项目文件夹，点击左侧的 Source Control（源管理）图标。
+- 如果尚未初始化仓库，VS Code 会显示“Initialize Repository”或“Publish to GitHub/Remote”。
+- 若已是本地仓库，首次推送通常在 Source Control 顶部会出现“Publish Branch”按钮，点击后按提示选择 GitHub 账户与远程仓库。
+- 点击右下角账户图标可以登录并连接 GitHub（若未登录）。
+
+8) 克隆远程仓库到本地
+
+```bash
+git clone <REPO_URL>
+cd REPO_NAME
+```
+
+9) 常见的推拉命令（日常使用）
+
+```bash
+# 查看状态
+git status
+# 拉取远端最新并合并到当前分支
+git pull
+# 或使用 rebase：
+git pull --rebase
+# 添加并提交
+git add file1 file2
+git commit -m "描述性提交信息"
+# 推送当前分支到 origin
+git push   -u origin main
+```
+
+
+
+14) 参考顺序（最常用快速步骤）
+
+```bash
+# 在本地新项目中快速执行：
+git init
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git remote add origin <REPO_URL>
+git push -u origin main
+```
+
+—— 结束 ——
+
+如需我把示例中的 `<REPO_URL>`、`USERNAME` 替换为你的仓库，或演示 SSH/PAT 的具体操作，请告诉我你的偏好。
