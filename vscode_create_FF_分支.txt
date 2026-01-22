@@ -44,7 +44,7 @@ FF：要推送的本地分支名（远程会自动创建同名的 FF 分支）�
 合并分支前必须先切换到目标分支（main）：
 bash
 运行
-git checkout main
+git checkout main//合并FF分支之前，要切回main分支
 指令含义：git checkout main 切换到本地 main 分支，确保后续合并操作是基于 main 分支执行。
 步骤 7：将 FF 分支合并到 main 分支（本地）
 bash
